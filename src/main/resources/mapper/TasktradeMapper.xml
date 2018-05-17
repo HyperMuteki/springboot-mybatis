@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.domain.mapper.TasktradeMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.domain.model.Tasktrade" >
+    <id column="tr_id" property="trId" jdbcType="BIGINT" />
+    <result column="tr_start_time" property="trStartTime" jdbcType="TIMESTAMP" />
+    <result column="tr_end_time" property="trEndTime" jdbcType="TIMESTAMP" />
+    <result column="tid" property="tid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="ac_id" property="acId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tr_id, tr_start_time, tr_end_time, tid, status, ac_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from task_trade
+    where tr_id = #{trId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from task_trade
+    where tr_id = #{trId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.demo.domain.model.Tasktrade" >
+    insert into task_trade (tr_id, tr_start_time, tr_end_time, 
+      tid, status, ac_id)
+    values (#{trId,jdbcType=BIGINT}, #{trStartTime,jdbcType=TIMESTAMP}, #{trEndTime,jdbcType=TIMESTAMP}, 
+      #{tid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{acId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.domain.model.Tasktrade" >
+    insert into task_trade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="trId != null" >
+        tr_id,
+      </if>
+      <if test="trStartTime != null" >
+        tr_start_time,
+      </if>
+      <if test="trEndTime != null" >
+        tr_end_time,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="acId != null" >
+        ac_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="trId != null" >
+        #{trId,jdbcType=BIGINT},
+      </if>
+      <if test="trStartTime != null" >
+        #{trStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trEndTime != null" >
+        #{trEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="acId != null" >
+        #{acId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.domain.model.Tasktrade" >
+    update task_trade
+    <set >
+      <if test="trStartTime != null" >
+        tr_start_time = #{trStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trEndTime != null" >
+        tr_end_time = #{trEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="acId != null" >
+        ac_id = #{acId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tr_id = #{trId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.domain.model.Tasktrade" >
+    update task_trade
+    set tr_start_time = #{trStartTime,jdbcType=TIMESTAMP},
+      tr_end_time = #{trEndTime,jdbcType=TIMESTAMP},
+      tid = #{tid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      ac_id = #{acId,jdbcType=INTEGER}
+    where tr_id = #{trId,jdbcType=BIGINT}
+  </update>
+</mapper>

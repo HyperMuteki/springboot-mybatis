@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.domain.mapper.TasktableMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.domain.model.Tasktable" >
+    <id column="tid" property="tid" jdbcType="BIGINT" />
+    <result column="stime" property="stime" jdbcType="TIMESTAMP" />
+    <result column="etime" property="etime" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="pub_id" property="pubId" jdbcType="INTEGER" />
+    <result column="tag" property="tag" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="reward" property="reward" jdbcType="INTEGER" />
+    <result column="paystatus" property="paystatus" jdbcType="INTEGER" />
+    <result column="payway" property="payway" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.demo.domain.model.Tasktable" extends="BaseResultMap" >
+    <result column="position" property="position" jdbcType="BINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tid, stime, etime, title, pub_id, tag, content, pic, status, reward, paystatus, payway
+  </sql>
+  <sql id="Blob_Column_List" >
+    ST_astext(position) position
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from task_table
+    where tid = #{tid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from task_table
+    where tid = #{tid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.demo.domain.model.Tasktable" >
+    insert into task_table (tid, stime, etime,
+      title, pub_id, tag,
+      content, pic, status,
+      reward, position, paystatus, payway)
+    values (#{tid,jdbcType=BIGINT}, #{stime,jdbcType=TIMESTAMP}, #{etime,jdbcType=TIMESTAMP},
+      #{title,jdbcType=VARCHAR}, #{pubId,jdbcType=INTEGER}, #{tag,jdbcType=INTEGER},
+      #{content,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{reward,jdbcType=INTEGER}, ST_geomfromtext(#{position,jdbcType=VARCHAR}),#{paystatus,jdbcType=INTEGER},#{payway,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.domain.model.Tasktable" >
+    insert into task_table
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="stime != null" >
+        stime,
+      </if>
+      <if test="etime != null" >
+        etime,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="pubId != null" >
+        pub_id,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="reward != null" >
+        reward,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="paystatus != null" >
+        paystatus,
+      </if>
+      <if test="payway != null" >
+        payway,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        #{tid,jdbcType=BIGINT},
+      </if>
+      <if test="stime != null" >
+        #{stime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="etime != null" >
+        #{etime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pubId != null" >
+        #{pubId,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null" >
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        ST_geomfromtext(#{position,jdbcType=VARCHAR}),
+      </if>
+      <if test="paystatus != null" >
+        #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="payway != null" >
+        #{payway,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.domain.model.Tasktable" >
+    update task_table
+    <set >
+      <if test="stime != null" >
+        stime = #{stime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="etime != null" >
+        etime = #{etime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pubId != null" >
+        pub_id = #{pubId,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null" >
+        reward = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        position = ST_geomfromtext(#{position,jdbcType=VARCHAR})
+      </if>
+      <if test="paystatus != null" >
+        #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="payway != null" >
+        #{payway,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.demo.domain.model.Tasktable" >
+    update task_table
+    set stime = #{stime,jdbcType=TIMESTAMP},
+      etime = #{etime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      pub_id = #{pubId,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      reward = #{reward,jdbcType=INTEGER},
+      position = ST_geomfromtext(#{position,jdbcType=VARCHAR}),
+      paystatus = #{paystatus,jdbcType=INTEGER},
+      payway = #{payway,jdbcType=INTEGER}
+    where tid = #{tid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.domain.model.Tasktable" >
+    update task_table
+    set stime = #{stime,jdbcType=TIMESTAMP},
+      etime = #{etime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      pub_id = #{pubId,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      reward = #{reward,jdbcType=INTEGER},
+      paystatus = #{paystatus,jdbcType=INTEGER},
+      payway = #{payway,jdbcType=INTEGER}
+    where tid = #{tid,jdbcType=BIGINT}
+  </update>
+  <!--查询全部-->
+  <select id="findAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from task_table
+  </select>
+
+  <!--附近500米(任务)-->
+  <select id="selectAround" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    SELECT
+    title,
+    FLOOR(ST_DISTANCE_SPHERE((SELECT
+    position
+    FROM
+    task_table
+    WHERE
+    tid =  #{tid,jdbcType=BIGINT}),
+    position)) position
+    FROM
+    task_table
+    WHERE
+    ST_DISTANCE_SPHERE((SELECT
+    position
+    FROM
+    task_table
+    WHERE
+    tid =  #{tid,jdbcType=BIGINT}),
+    position) &lt; 500
+  </select>
+
+  <!--附近500米(坐标)-->
+  <select id="selectPositionAround" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    SELECT
+    title,
+    FLOOR(ST_DISTANCE_SPHERE(ST_geomfromtext(#{position,jdbcType=VARCHAR}),
+    position)) position
+    FROM
+    task_table
+    WHERE
+    ST_DISTANCE_SPHERE(ST_geomfromtext(#{position,jdbcType=VARCHAR}),
+    position) &lt; 500
+  </select>
+</mapper>
